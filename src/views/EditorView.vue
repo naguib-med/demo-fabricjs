@@ -79,7 +79,6 @@ import ShapePanel from "../components/Panels/ShapePanel.vue";
 import DrawPanel from "../components/Panels/DrawPanel.vue";
 import DownloadPanel from "../components/Panels/DownloadPanel.vue";
 import data from "../Data/datajson.json";
-import TestPanel from "../components/Panels/TestPanel.vue";
 
 let canvas = null;
   export default {
@@ -156,7 +155,7 @@ let canvas = null;
           this.initBrush();
 
       },
-      components: { TestPanel, DownloadPanel, DrawPanel, ShapePanel, TextPanel },
+      components: {DownloadPanel, DrawPanel, ShapePanel, TextPanel },
       methods: {
           selectPanel(panel) {
               this.activePanel = panel;
@@ -507,10 +506,10 @@ let canvas = null;
 }
 
 canvas.editor-canvas {
-    border: 2px solid #333;
+    border: 1px solid #801edb;
     cursor: pointer;
     background-color: #f1f1f1;
     margin: 20px;
-    box-shadow: 0 0 10px #888888;
+    box-shadow: 0 0 5px #888888;
 }
 </style>

@@ -10,7 +10,7 @@ import { RouterView } from 'vue-router'
          <v-btn color="dark" to="/">Github</v-btn>
       </v-app-bar>
       <v-main>
-          <RouterView />
+          <RouterView/>
       </v-main>
     </v-app>
 </template>
