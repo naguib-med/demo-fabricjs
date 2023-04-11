@@ -7,7 +7,7 @@ import { RouterView } from 'vue-router'
       <v-app-bar app color="grey-darken-4">
          <v-toolbar-title>Poster Editor</v-toolbar-title>
          <v-spacer></v-spacer>
-         <v-btn color="dark" to="/">Github</v-btn>
+         <v-btn color="dark" href="https://github.com/naguib-med/demo-fabricjs" target="_blank">GitHub</v-btn>
       </v-app-bar>
       <v-main>
           <RouterView/>

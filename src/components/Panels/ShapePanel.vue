@@ -17,6 +17,22 @@
         <v-color-picker v-model="shapeColor" hide-inputs  @update:modelValue="changeShapeColor"></v-color-picker>
       </v-col>
     </v-row>
+
+      <v-row>
+        <v-col cols="11" class="mx-auto">
+            <v-btn color="primary" @click="animate">
+                Add animate
+            </v-btn>
+        </v-col>
+
+      </v-row>
+      <v-row>
+        <v-col cols="11" class="mx-auto">
+            <v-btn color="primary" @click="toggleLayer">
+                Toggle layer
+            </v-btn>
+        </v-col>
+      </v-row>
   </v-navigation-drawer>
 </template>
 
@@ -45,6 +61,12 @@ export default {
     changeShapeColor() {
       this.$emit("change-shape-color", this.shapeColor);
     },
+    animate() {
+        this.$emit("animate");
+    },
+    toggleLayer() {
+        this.$emit("toggle-layer");
+    }
   },
 };
 </script>

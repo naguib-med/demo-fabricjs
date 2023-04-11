@@ -34,7 +34,7 @@
                 </v-list>
             </v-navigation-drawer>
             <TextPanel v-if="activePanel === 'text'" @add-text="addText" @apply-text-tool="applyTextTool" />
-            <ShapePanel v-if="activePanel === 'shape'" @add-shape="addShape" @change-shape-color="changeShapeColor" />
+            <ShapePanel v-if="activePanel === 'shape'" @add-shape="addShape" @change-shape-color="changeShapeColor" @animate="animate" @toggle-layer="toggleLayer"/>
             <DrawPanel v-if="activePanel === 'draw'" @start-drawing="startDrawing" @stop-drawing="stopDrawing" @clear-canvas="clearCanvas"
                        @change-brush-color="changeBrushColor" @change-brush-width="changeBrushWidth" @change-brush-type="changeBrushType" />
 
@@ -58,13 +58,11 @@
                 </v-row>
             </div>
 
-            <!-- Footer pour les boutons d'outils de zoom et d'ajout de poster -->
+<!--             Footer pour les boutons d'outils de zoom et d'ajout de poster-->
             <v-footer app>
                 <v-row align="center">
                     <v-col>
-                        <v-btn icon color="primary">
-                            <v-icon>mdi mdi-plus</v-icon>
-                        </v-btn>
+                        <v-switch label="Switch Layer" inset v-model="showTopLayer"></v-switch>
                     </v-col>
                 </v-row>
             </v-footer>
@@ -94,6 +92,8 @@ let canvas = null;
               isDrawingMode: false,
               isDrawing: false,
               lastPointer: null,
+              showTopLayer: true,
+              topLayer: null,
           };
       },
       mounted() {
@@ -173,6 +173,8 @@ let canvas = null;
               canvas.setActiveObject(text);
           },
           addTitle() {
+              console.log("addTitle");
+              console.log(new fabric.Rect)
               return new fabric.IText("Titre", {
                   left: 230,
                   top: 100,
@@ -465,8 +467,120 @@ let canvas = null;
               document.body.appendChild(a);
               a.click();
               document.body.removeChild(a);
+          },
+
+          animate() {
+              const rectangle = new fabric.Rect({
+                  left: 100,
+                  top: 100,
+                  width: 150,
+                  height: 100,
+                  fill: 'blue',
+              });
+
+              canvas.add(rectangle);
+
+              // Rotation du rectangle de 45 degrés avec animation
+           /*   rectangle.animate('angle', '+=45', {
+                  duration: 1000,
+                  onChange: canvas.renderAll.bind(canvas),
+                  onComplete: () => {
+                      console.log('Rotation animation complete');
+                  },
+                  easing: fabric.util.ease.easeOutCubic
+              });*/
+
+              // Redimensionnement du rectangle avec animation
+            /*  rectangle.animate({ scaleX: 2, scaleY: 2 }, {
+                  duration: 2000,
+                  onChange: canvas.renderAll.bind(canvas),
+                  onComplete: () => {
+                      console.log('Scaling animation complete');
+                  },
+                  easing: fabric.util.ease.easeOutCubic
+              });*/
+
+              // Animation de plusieurs propriétés en parallèle
+              // Animation de la position en parallèle
+              rectangle.animate({ left: 300, top: 300 }, {
+                  duration: 2000,
+                  onChange: canvas.renderAll.bind(canvas),
+                  onComplete: () => {
+                      console.log('Position animation complete');
+                  },
+                  easing: fabric.util.ease.easeOutCubic
+              });
+
+              // Animation du redimensionnement en parallèle
+              rectangle.animate({ scaleX: 2, scaleY: 2 }, {
+                  duration: 2000,
+                  onChange: canvas.renderAll.bind(canvas),
+                  onComplete: () => {
+                      console.log('Scaling animation complete');
+                  },
+                  easing: fabric.util.ease.easeOutCubic
+              });
+
+              // Animation de la rotation en parallèle
+              rectangle.animate({ angle: 360 }, {
+                  duration: 2000,
+                  onChange: canvas.renderAll.bind(canvas),
+                  onComplete: () => {
+                      console.log('Rotation animation complete');
+                  },
+                  // définit la fonction d'interpolation pour calculer la progression de l'animation au fil du temps
+                  easing: fabric.util.ease.easeOutCubic
+                  // easeOutCubic : décélération progressive vers la fin de l'animation
+              });
+          },
+
+          // Fonction pour basculer la visibilité du calque supérieur
+          toggleLayer() {
+              // Création de deux rectangles
+              const rectangle1 = new fabric.Rect({
+                  left: 100,
+                  top: 100,
+                  width: 100,
+                  height: 100,
+                  fill: 'red',
+              });
+
+              const rectangle2 = new fabric.Rect({
+                  left: 150,
+                  top: 150,
+                  width: 100,
+                  height: 100,
+                  fill: 'blue',
+              });
+
+              // Création d'un groupe pour le premier calque (calque du bas)
+              const bottomLayer = new fabric.Group([rectangle1], {
+                  left: 0,
+                  top: 0,
+              });
+
+              // Création d'un groupe pour le deuxième calque (calque du haut)
+              this.topLayer = new fabric.Group([rectangle2], {
+                  left: 0,
+                  top: 0
+              });
+
+              // Création d'un groupe pour contenir tous les calques
+              const allLayers = new fabric.Group([bottomLayer, this.topLayer], {
+                  left: 0,
+                  top: 0,
+              });
+
+              // Ajout du groupe de calques au canevas
+             canvas.add(allLayers);
           }
 
+      },
+      watch: {
+          showTopLayer(newValue) {
+              this.topLayer.set("visible", newValue);
+              canvas.renderAll();
+          },
       },
   };
 
