@@ -423,7 +423,7 @@ let canvas = null;
                   this.downloadJson();
               } else if (value === "svg") {
                   this.downloadSvg();
-              } else if (value == "image") {
+              } else if (value === "image") {
                   this.downloadImage();
               }
           },
@@ -460,12 +460,10 @@ let canvas = null;
                   multiplier: 4,
                   quality: 1,
               });
-              const blob = new Blob([image], { type: "image/png" });
-              const url = URL.createObjectURL(blob);
               const a = document.createElement("a");
-              document.body.appendChild(a);
               a.download = "canvas.png";
-              a.href = url;
+              a.href = image;
+              document.body.appendChild(a);
               a.click();
               document.body.removeChild(a);
           }
