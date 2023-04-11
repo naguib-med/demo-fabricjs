@@ -173,8 +173,6 @@ let canvas = null;
               canvas.setActiveObject(text);
           },
           addTitle() {
-              console.log("addTitle");
-              console.log(new fabric.Rect)
               return new fabric.IText("Titre", {
                   left: 230,
                   top: 100,
@@ -182,14 +180,9 @@ let canvas = null;
                   fontSize: 36,
                   fill: "#000000",
                   fontWeight: "bold",
-                  underline: false,
-                  linethrough: false,
                   fontStyle: "normal",
                   textAlign: "left",
-                  hasRotatingPoint: false,
-                  cornerStyle: "circle",
                   cornerColor: "rgb(62, 155, 246)",
-                  cornerSize: 12,
               });
           },
 

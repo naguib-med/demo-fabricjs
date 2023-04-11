@@ -4,7 +4,7 @@ import { RouterView } from 'vue-router'
 
 <template>
    <v-app>
-      <v-app-bar app color="grey-darken-4">
+      <v-app-bar app color="red">
          <v-toolbar-title>Poster Editor</v-toolbar-title>
          <v-spacer></v-spacer>
          <v-btn color="dark" href="https://github.com/naguib-med/demo-fabricjs" target="_blank">GitHub</v-btn>
