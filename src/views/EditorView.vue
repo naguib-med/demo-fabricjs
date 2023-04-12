@@ -154,6 +154,8 @@ let canvas = null;
 
           this.initBrush();
 
+          console.log(fabric.Object.prototype);
+
       },
       components: {DownloadPanel, DrawPanel, ShapePanel, TextPanel },
       methods: {
@@ -171,6 +173,7 @@ let canvas = null;
               }
               canvas.add(text);
               canvas.setActiveObject(text);
+              canvas.renderAll();
           },
           addTitle() {
               return new fabric.IText("Titre", {
@@ -267,6 +270,7 @@ let canvas = null;
               }
               canvas.add(shape);
               canvas.setActiveObject(shape);
+              canvas.renderAll();
           },
           addSquare() {
               return new fabric.Rect({
@@ -514,14 +518,14 @@ let canvas = null;
 
               // Animation de la rotation en parallèle
               rectangle.animate({ angle: 360 }, {
-                  duration: 2000,
+                  duration: 2000, // ms
                   onChange: canvas.renderAll.bind(canvas),
                   onComplete: () => {
                       console.log('Rotation animation complete');
                   },
                   // définit la fonction d'interpolation pour calculer la progression de l'animation au fil du temps
                   easing: fabric.util.ease.easeOutCubic
-                  // easeOutCubic : décélération progressive vers la fin de l'animation
+                  // easeOutCubic : une animation qui commence rapidement et ralentit progressivement vers la fin
               });
           },
 
@@ -564,6 +568,7 @@ let canvas = null;
 
               // Ajout du groupe de calques au canevas
              canvas.add(allLayers);
+              canvas.renderAll();
           }
 
       },
