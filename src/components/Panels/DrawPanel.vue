@@ -20,7 +20,7 @@
 
     <v-row class="mt-5">
       <v-col cols="11" class="mx-auto">
-        <v-slider v-model="brushWidth" step="1" min="1" max="50" thumb-label hide-details @input="changeBrushWidth"></v-slider>
+        <v-slider v-model="brushWidth" step="1" min="1" max="50" thumb-label hide-details @update:modelValue="changeBrushWidth"></v-slider>
       </v-col>
     </v-row>
 
